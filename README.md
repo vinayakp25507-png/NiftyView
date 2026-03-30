@@ -69,14 +69,18 @@ Will be deployed via GitHub before the final deadline.
 
 ## Setup & Project Structure:-
 
+```
 niftyview/
 ├── index.html
 ├── style.css
 ├── app.js
 └── README.md
+```
 
 ---
 
 ## Author:-
 
-Vinayak
+Vinayak Pachauri
+2501010507
+vinayak.p25507@nst.rishihood.edu.in
