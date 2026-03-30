@@ -19,66 +19,119 @@
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="container">
-        <!-- Controls -->
-        <div class="controls" id="controls-bar">
-            <input type="text" class="search-input" id="search-input" placeholder="Search by name or symbol..." />
-            <select class="sort-select" id="sort-select">
-                <option value="" disabled selected>Sort by</option>
-                <option value="name-asc">Name A–Z</option>
-                <option value="name-desc">Name Z–A</option>
-                <option value="price-high">Price High–Low</option>
-                <option value="price-low">Price Low–High</option>
-                <option value="change-high">Change High–Low</option>
-                <option value="change-low">Change Low–High</option>
-                </select>
-            <span class="stock-count" id="stock-count">NIFTY50 STOCKS</span>
-        </div>
+    <!-- Page Layout -->
+    <div class="page-layout">
+        <!-- Main Content -->
+        <main class="container">
+            <!-- Controls -->
+            <div class="controls" id="controls-bar">
+                <input type="text" class="search-input" id="search-input" placeholder="Search by name or symbol..." />
+                <select class="sort-select" id="sort-select">
+                    <option value="" disabled selected>Sort by</option>
+                    <option value="name-asc">Name A–Z</option>
+                    <option value="name-desc">Name Z–A</option>
+                    <option value="price-high">Price High–Low</option>
+                    <option value="price-low">Price Low–High</option>
+                    <option value="change-high">Change High–Low</option>
+                    <option value="change-low">Change Low–High</option>
+                    </select>
+                <span class="stock-count" id="stock-count">NIFTY50 STOCKS</span>
+            </div>
 
-        <!-- Stock Table -->
-        <table class="stock-table" id="stock-table">
-            <thead>
-                <tr>
-                    <th>Stock</th>
-                    <th>Price (INR)</th>
-                    <th>Change</th>
-                </tr>
-            </thead>
-            <tbody id="stock-table-body">
-                <!-- Demo Stock 1: Positive change -->
-                <tr>
-                    <td>
-                        <div class="stock-ticker">RELIANCE - Demo 1</div>
-                        <div class="stock-name">Reliance Industries - Hardcoded Values</div>
-                    </td>
-                    <td>
-                        <span class="stock-price">2,945.30</span>
-                    </td>
-                    <td>
-                        <span class="stock-change positive">
-                            <span class="arrow">▲</span> +1.24%
-                        </span>
-                    </td>
-                </tr>
+            <!-- Stock Table -->
+            <table class="stock-table" id="stock-table">
+                <thead>
+                    <tr>
+                        <th>Stock</th>
+                        <th>Price (INR)</th>
+                        <th>Change</th>
+                    </tr>
+                </thead>
+                <tbody id="stock-table-body">
+                    <!-- Demo Stock 1: Positive change -->
+                    <tr>
+                        <td>
+                            <div class="stock-ticker">RELIANCE - Demo 1</div>
+                            <div class="stock-name">Reliance Industries - Hardcoded Values</div>
+                        </td>
+                        <td>
+                            <span class="stock-price">2,945.30</span>
+                        </td>
+                        <td>
+                            <span class="stock-change positive">
+                                <span class="arrow">▲</span> +1.24%
+                            </span>
+                        </td>
+                    </tr>
 
-                <!-- Demo Stock 2: Negative change -->
-                <tr>
-                    <td>
-                        <div class="stock-ticker">TCS - Demo 2</div>
-                        <div class="stock-name">Tata Consultancy Services - Hardcoded Values</div>
-                    </td>
-                    <td>
-                        <span class="stock-price">3,512.75</span>
-                    </td>
-                    <td>
-                        <span class="stock-change negative">
-                            <span class="arrow">▼</span> -0.67%
-                        </span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </main>
+                    <!-- Demo Stock 2: Negative change -->
+                    <tr>
+                        <td>
+                            <div class="stock-ticker">TCS - Demo 2</div>
+                            <div class="stock-name">Tata Consultancy Services - Hardcoded Values</div>
+                        </td>
+                        <td>
+                            <span class="stock-price">3,512.75</span>
+                        </td>
+                        <td>
+                            <span class="stock-change negative">
+                                <span class="arrow">▼</span> -0.67%
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+
+        <!-- Sidebar: Getting Started -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-card">
+                <h2 class="sidebar-title">Getting Started</h2>
+                <p class="sidebar-desc">Follow these steps to see live Nifty 50 prices.</p>
+
+                <ol class="steps-list">
+                    <li class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                        <h3 class="step-title">Create an account</h3>
+                        <p class="step-text">
+                            Visit <a href="https://www.alphavantage.co/support/#api-key" target="_blank"
+                            rel="noopener noreferrer">Alpha Vantage</a> and sign up for a free account.
+                        </p>
+                        </div>
+                    </li>
+                    <li class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                        <h3 class="step-title">Get your API key</h3>
+                        <p class="step-text">
+                            After signing up, you'll receive a free API key. Copy it from your dashboard.
+                        </p>
+                        </div>
+                    </li>
+                    <li class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                        <h3 class="step-title">Enter your key below</h3>
+                        <p class="step-text">
+                            Paste your API key and hit connect to start fetching live stock data.
+                        </p>
+                        </div>
+                    </li>
+                </ol>
+
+                <!-- API Key Input -->
+                <div class="api-key-section" id="api-key-section">
+                <label class="api-key-label" for="api-key-input">API Key</label>
+                <div class="api-key-row">
+                    <input type="text" class="api-key-input" id="api-key-input" placeholder="Paste your API key..." spellcheck="false" autocomplete="off">
+                    <button class="api-key-btn" id="api-key-btn">Connect</button>
+                </div>
+                <p class="api-key-hint">Free tier: 25 requests per day</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
 </body>
 </html>
