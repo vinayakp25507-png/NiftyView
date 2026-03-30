@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <meta name="description" content="NiftyView — Live Nifty 50 stock prices dashboard with real-time price tracking and percentage changes." /> -->
+    <title>NIFTYVIEW</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="site-header">
+        <div class="header-inner">
+            <span class="logo">NIFTYVIEW</span>
+            <span class="header-subtitle">Nifty 50 Dashboard</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Controls -->
+        <div class="controls" id="controls-bar">
+            <input type="text" class="search-input" id="search-input" placeholder="Search by name or symbol..." />
+            <select class="sort-select" id="sort-select">
+                <option value="" disabled selected>Sort by</option>
+                <option value="name-asc">Name A–Z</option>
+                <option value="name-desc">Name Z–A</option>
+                <option value="price-high">Price High–Low</option>
+                <option value="price-low">Price Low–High</option>
+                <option value="change-high">Change High–Low</option>
+                <option value="change-low">Change Low–High</option>
+                </select>
+            <span class="stock-count" id="stock-count">NIFTY50 STOCKS</span>
+        </div>
+
+        <!-- Stock Table -->
+        <table class="stock-table" id="stock-table">
+            <thead>
+                <tr>
+                    <th>Stock</th>
+                    <th>Price (INR)</th>
+                    <th>Change</th>
+                </tr>
+            </thead>
+            <tbody id="stock-table-body">
+                <!-- Demo Stock 1: Positive change -->
+                <tr>
+                    <td>
+                        <div class="stock-ticker">RELIANCE - Demo 1</div>
+                        <div class="stock-name">Reliance Industries - Hardcoded Values</div>
+                    </td>
+                    <td>
+                        <span class="stock-price">2,945.30</span>
+                    </td>
+                    <td>
+                        <span class="stock-change positive">
+                            <span class="arrow">▲</span> +1.24%
+                        </span>
+                    </td>
+                </tr>
+
+                <!-- Demo Stock 2: Negative change -->
+                <tr>
+                    <td>
+                        <div class="stock-ticker">TCS - Demo 2</div>
+                        <div class="stock-name">Tata Consultancy Services - Hardcoded Values</div>
+                    </td>
+                    <td>
+                        <span class="stock-price">3,512.75</span>
+                    </td>
+                    <td>
+                        <span class="stock-change negative">
+                            <span class="arrow">▼</span> -0.67%
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
