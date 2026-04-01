@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <meta name="description" content="NiftyView — Live Nifty 50 stock prices dashboard with real-time price tracking and percentage changes." /> -->
-    <title>NIFTYVIEW</title>
+    <!-- <meta name="description" content="MarketView - Live stock prices dashboard with real-time tracking and percentage changes." /> -->
+    <title>MARKETVIEW</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -14,8 +14,8 @@
     <!-- Header -->
     <header class="header" id="site-header">
         <div class="header-inner">
-            <span class="logo">NIFTYVIEW</span>
-            <span class="header-subtitle">Nifty 50 Dashboard</span>
+            <span class="logo">MARKETVIEW</span>
+            <span class="header-subtitle">Market Dashboard</span>
         </div>
     </header>
 
@@ -34,8 +34,8 @@
                     <option value="price-low">Price Low–High</option>
                     <option value="change-high">Change High–Low</option>
                     <option value="change-low">Change Low–High</option>
-                    </select>
-                <span class="stock-count" id="stock-count">NIFTY50 STOCKS</span>
+                </select>
+                <span class="stock-count" id="stock-count">MARKET STOCKS</span>
             </div>
 
             <!-- Stock Table -->
@@ -43,43 +43,11 @@
                 <thead>
                     <tr>
                         <th>Stock</th>
-                        <th>Price (INR)</th>
+                        <th>Price (USD)</th>
                         <th>Change</th>
                     </tr>
                 </thead>
-                <tbody id="stock-table-body">
-                    <!-- Demo Stock 1: Positive change -->
-                    <tr>
-                        <td>
-                            <div class="stock-ticker">RELIANCE - Demo 1</div>
-                            <div class="stock-name">Reliance Industries - Hardcoded Values</div>
-                        </td>
-                        <td>
-                            <span class="stock-price">2,945.30</span>
-                        </td>
-                        <td>
-                            <span class="stock-change positive">
-                                <span class="arrow">▲</span> +1.24%
-                            </span>
-                        </td>
-                    </tr>
-
-                    <!-- Demo Stock 2: Negative change -->
-                    <tr>
-                        <td>
-                            <div class="stock-ticker">TCS - Demo 2</div>
-                            <div class="stock-name">Tata Consultancy Services - Hardcoded Values</div>
-                        </td>
-                        <td>
-                            <span class="stock-price">3,512.75</span>
-                        </td>
-                        <td>
-                            <span class="stock-change negative">
-                                <span class="arrow">▼</span> -0.67%
-                            </span>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody id="stock-table-body"></tbody>
             </table>
         </main>
 
@@ -87,7 +55,7 @@
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-card">
                 <h2 class="sidebar-title">Getting Started</h2>
-                <p class="sidebar-desc">Follow these steps to see live Nifty 50 prices.</p>
+                <p class="sidebar-desc">Follow these steps to see live market prices.</p>
 
                 <ol class="steps-list">
                     <li class="step">
@@ -95,8 +63,8 @@
                         <div class="step-content">
                         <h3 class="step-title">Create an account</h3>
                         <p class="step-text">
-                            Visit <a href="https://www.alphavantage.co/support/#api-key" target="_blank"
-                            rel="noopener noreferrer">Alpha Vantage</a> and sign up for a free account.
+                            Visit <a href="https://twelvedata.com/" target="_blank"
+                            rel="noopener noreferrer">Twelve Data</a> and sign up for an account.
                         </p>
                         </div>
                     </li>
@@ -127,11 +95,13 @@
                     <input type="text" class="api-key-input" id="api-key-input" placeholder="Paste your API key..." spellcheck="false" autocomplete="off">
                     <button class="api-key-btn" id="api-key-btn">Connect</button>
                 </div>
-                <p class="api-key-hint">Free tier: 25 requests per day</p>
+                <p class="api-key-hint">Check your Twelve Data plan limits for API credits.</p>
+                <p class="api-key-status" id="api-key-status" aria-live="polite"></p>
                 </div>
             </div>
         </aside>
     </div>
 
+    <script src="script.js"></script>
 </body>
 </html>

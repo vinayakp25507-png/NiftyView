@@ -370,10 +370,39 @@ body {
     transform: scale(0.97);
 }
 
+.api-key-btn:disabled {
+    background: #6f6f6f;
+    cursor: not-allowed;
+    transform: none;
+}
+
 .api-key-hint {
     font-size: 0.7rem;
     color: #999999;
     margin-top: 8px;
+}
+
+.api-key-status {
+    min-height: 1.2em;
+    margin-top: 8px;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+.api-key-status.info {
+    color: #2563eb;
+}
+
+.api-key-status.success {
+    color: #16a34a;
+}
+
+.api-key-status.warn {
+    color: #b45309;
+}
+
+.api-key-status.error {
+    color: #dc2626;
 }
 
 /* ===== Responsive ===== */

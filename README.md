@@ -1,85 +1,55 @@
-# 📈 NiftyView —
+# MarketView
 
-Indian Stock Market Dashboard
+A responsive vanilla JavaScript stock dashboard that fetches and displays live quotes using the Twelve Data API.
 
-A responsive web application for tracking Indian stocks with real-time data, search, and sorting features.
+## What this project does
 
----
+- Takes an API key input from the user
+- Fetches quote data for a selected free-tier stock list
+- Renders stock symbol, company name, latest price, and percent change in a table
+- Shows clear status messages for loading, success, invalid key, plan issues, and rate limits
 
-## Purpose:-
+## Current scope
 
-NiftyView allows users to monitor selected Indian stocks in a clean and minimal interface. Users can search stocks by name or symbol and sort them based on price or performance.
+- Implemented:
+  - API key based connect flow
+  - Live quote fetching from Twelve Data
+  - Dynamic table rendering
+  - Basic error handling and status display
+- Placeholder UI only:
+  - Search control (coming soon alert)
+  - Sort control (coming soon alert)
 
-The project demonstrates practical JavaScript skills including API integration, array Higher-Order Functions, and dynamic UI rendering.
+## API details
 
----
+- Provider: Twelve Data
+- Base URL: `https://api.twelvedata.com`
+- Endpoint used: `/quote`
+- Docs: `https://twelvedata.com/docs`
 
-## API Used:-
+## Tech stack
 
-Alpha Vantage API
+- HTML5
+- CSS3
+- JavaScript (ES6+, vanilla)
 
-Base URL: https://www.alphavantage.co/query
+## Project structure
 
-Docs: https://www.alphavantage.co/documentation/
-
-Endpoint used:
-GLOBAL_QUOTE — fetch real-time stock data for selected Indian stocks
-
----
-
-## Planned Features:-
-
-Stock List — Display selected Indian stocks with name, price, and percentage change
-
-Search — Search stocks by name or symbol (Array filter)
-
-Sort — Sort stocks by price (high to low / low to high) (Array sort)
-
-Simple UI — Clean table layout showing stock, price (INR), and change
-
-Bonus Features:-
-
-Local Storage — Save user preferences if implemented
-
-Loading State — Display loading indicator while fetching data
-
-Error Handling — Handle API failures gracefully
-
----
-
-## Technologies:-
-
-HTML5 — Structure
-
-CSS3 — Styling, layout, responsive design
-
-JavaScript (ES6+) — Fetch API, DOM manipulation, HOFs
-
-Alpha Vantage API — Stock data
-
-Pure vanilla JS (no frameworks used)
-
----
-
-## Deployment:-
-
-Will be deployed via GitHub before the final deadline.
-
----
-
-## Setup & Project Structure:-
-
-```
-niftyview/
+```text
+.
 ├── index.html
 ├── style.css
-├── app.js
+├── script.js
 └── README.md
 ```
 
----
+## Run locally
 
-## Author:-
+1. Open `index.html` in a browser.
+2. Enter your Twelve Data API key.
+3. Click `Connect` to load stock quotes.
+
+## Author
 
 Vinayak Pachauri
 
