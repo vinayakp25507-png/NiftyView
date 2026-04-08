@@ -2,6 +2,9 @@
 
 A responsive vanilla JavaScript stock dashboard that fetches and displays live quotes using the Twelve Data API.
 
+## Deployed here:
+[text](https://nifty-view-eight.vercel.app/)
+
 ## What this project does
 
 - Takes an API key input from the user
