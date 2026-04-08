@@ -20,6 +20,34 @@ const connectButton = document.getElementById("api-key-btn");
 const statusEl = document.getElementById("api-key-status");
 const searchInput = document.getElementById("search-input");
 const sortSelect = document.getElementById("sort-select");
+const themeToggle = document.getElementById("theme-toggle");
+const wishlistList = document.getElementById("wishlist-list");
+const wishlistEmpty = document.getElementById("wishlist-empty");
+const THEME_KEY = "marketview-theme";
+const WISHLIST_KEY = "marketview-wishlist";
+let wishlist = [];
+
+function applyTheme(theme) {
+    const resolvedTheme = theme === "dark" ? "dark" : "light";
+    document.body.setAttribute("data-theme", resolvedTheme);
+    themeToggle.textContent = resolvedTheme === "dark" ? "Light Mode" : "Dark Mode";
+    themeToggle.setAttribute(
+        "aria-label",
+        resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode",
+    );
+    themeToggle.setAttribute("aria-pressed", String(resolvedTheme === "dark"));
+}
+
+function initTheme() {
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    if (savedTheme === "light" || savedTheme === "dark") {
+        applyTheme(savedTheme);
+        return;
+    }
+
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    applyTheme(prefersDark ? "dark" : "light");
+}
 
 function setStatus(message, type) {
     statusEl.textContent = message;
@@ -58,6 +86,11 @@ function toPercent(value) {
 function createFetchedRow(stock, price, changePercent) {
     const row = document.createElement("tr");
     row.dataset.source = "fetched";
+    row.dataset.symbol = stock.symbol;
+    row.dataset.name = stock.name;
+    row.dataset.price = String(price);
+    row.dataset.changePercent = String(changePercent);
+    const isWishlisted = Boolean(wishlist.find((item) => item.symbol === stock.symbol));
 
     const changeClass = changePercent >= 0 ? "positive" : "negative";
     const arrow = changePercent >= 0 ? "▲" : "▼";
@@ -75,6 +108,11 @@ function createFetchedRow(stock, price, changePercent) {
                 <span class="arrow">${arrow}</span> ${toPercent(changePercent)}
             </span>
         </td>
+        <td>
+            <button class="wishlist-btn" type="button" ${isWishlisted ? "disabled" : ""}>
+                ${isWishlisted ? "Added" : "Add"}
+            </button>
+        </td>
     `;
 
     return row;
@@ -83,6 +121,100 @@ function createFetchedRow(stock, price, changePercent) {
 function clearFetchedRows() {
     tableBody.querySelectorAll('tr[data-source="fetched"]')
     .forEach((row) => row.remove());
+}
+
+function applySortToFetchedRows() {
+    const sortValue = sortSelect.value;
+    if (!sortValue) {
+        return;
+    }
+
+    const rows = Array.from(tableBody.querySelectorAll('tr[data-source="fetched"]'));
+    if (rows.length <= 1) {
+        return;
+    }
+
+    const getText = (row, key) => String(row.dataset[key] || "").toLowerCase();
+    const getNumber = (row, key) => Number(row.dataset[key] || 0);
+
+    const comparators = {
+        "name-asc": (a, b) => getText(a, "name").localeCompare(getText(b, "name")),
+        "name-desc": (a, b) => getText(b, "name").localeCompare(getText(a, "name")),
+        "price-high": (a, b) => getNumber(b, "price") - getNumber(a, "price"),
+        "price-low": (a, b) => getNumber(a, "price") - getNumber(b, "price"),
+        "change-high": (a, b) => getNumber(b, "changePercent") - getNumber(a, "changePercent"),
+        "change-low": (a, b) => getNumber(a, "changePercent") - getNumber(b, "changePercent"),
+    };
+
+    const sortedRows = rows.sort(comparators[sortValue] || comparators["name-asc"]);
+    const fragment = document.createDocumentFragment();
+    sortedRows.forEach((row) => fragment.appendChild(row));
+    tableBody.appendChild(fragment);
+}
+
+function saveWishlist() {
+    localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
+}
+
+function renderWishlist() {
+    wishlistList.innerHTML = "";
+
+    if (!wishlist.length) {
+        wishlistEmpty.style.display = "block";
+        wishlistList.style.display = "none";
+        return;
+    }
+
+    wishlistEmpty.style.display = "none";
+    wishlistList.style.display = "flex";
+
+    const itemsMarkup = wishlist.map((item) => `
+        <li class="wishlist-item" data-symbol="${item.symbol}">
+            <div class="wishlist-stock">
+                <div class="wishlist-symbol">${item.symbol}</div>
+                <div class="wishlist-name">${item.name}</div>
+            </div>
+            <button class="wishlist-remove" type="button" data-action="remove">Remove</button>
+        </li>
+    `).join("");
+
+    wishlistList.innerHTML = itemsMarkup;
+}
+
+function loadWishlist() {
+    const raw = localStorage.getItem(WISHLIST_KEY);
+    if (!raw) {
+        wishlist = [];
+        renderWishlist();
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(raw);
+        wishlist = Array.isArray(parsed) ? parsed.filter((item) => item?.symbol && item?.name) : [];
+    } catch {
+        wishlist = [];
+    }
+
+    renderWishlist();
+}
+
+function addToWishlist(stock) {
+    const alreadyExists = wishlist.find((item) => item.symbol === stock.symbol);
+    if (alreadyExists) {
+        return false;
+    }
+
+    wishlist = [...wishlist, stock];
+    saveWishlist();
+    renderWishlist();
+    return true;
+}
+
+function removeFromWishlist(symbol) {
+    wishlist = wishlist.filter((item) => item.symbol !== symbol);
+    saveWishlist();
+    renderWishlist();
 }
 
 async function fetchQuote(apiKey, symbol) {
@@ -232,6 +364,7 @@ async function handleConnect() {
 
     connectButton.disabled = false;
     connectButton.textContent = "Connect";
+    applySortToFetchedRows();
 }
 
 connectButton.addEventListener("click", handleConnect);
@@ -242,8 +375,6 @@ apiKeyInput.addEventListener("keydown", (event) => {
 });
 
 let searchComingSoonShown = false;
-let sortComingSoonShown = false;
-
 searchInput.addEventListener("focus", () => {
     if (!searchComingSoonShown) {
         alert("Search is coming soon.");
@@ -260,8 +391,72 @@ searchInput.addEventListener("keydown", (event) => {
 });
 
 sortSelect.addEventListener("change", () => {
-    if (!sortComingSoonShown) {
-        alert("Sorting is coming soon.");
-        sortComingSoonShown = true;
-    }
+    applySortToFetchedRows();
 });
+
+tableBody.addEventListener("click", (event) => {
+    const button = event.target.closest(".wishlist-btn");
+    if (!button) {
+        return;
+    }
+
+    const row = button.closest('tr[data-source="fetched"]');
+    if (!row) {
+        return;
+    }
+
+    const stock = {
+        symbol: String(row.dataset.symbol || "").trim(),
+        name: String(row.dataset.name || "").trim(),
+    };
+
+    if (!stock.symbol || !stock.name) {
+        return;
+    }
+
+    const added = addToWishlist(stock);
+    if (!added) {
+        button.textContent = "Added";
+        button.disabled = true;
+        return;
+    }
+
+    button.textContent = "Added";
+    button.disabled = true;
+});
+
+wishlistList.addEventListener("click", (event) => {
+    const removeButton = event.target.closest('button[data-action="remove"]');
+    if (!removeButton) {
+        return;
+    }
+
+    const item = removeButton.closest(".wishlist-item");
+    const symbol = String(item?.dataset.symbol || "");
+    if (!symbol) {
+        return;
+    }
+
+    removeFromWishlist(symbol);
+
+    Array.from(tableBody.querySelectorAll('tr[data-source="fetched"]'))
+    .filter((row) => row.dataset.symbol === symbol)
+    .forEach((row) => {
+        const rowButton = row.querySelector(".wishlist-btn");
+        if (!rowButton) {
+            return;
+        }
+        rowButton.textContent = "Add";
+        rowButton.disabled = false;
+    });
+});
+
+themeToggle.addEventListener("click", () => {
+    const currentTheme = document.body.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    const nextTheme = currentTheme === "dark" ? "light" : "dark";
+    applyTheme(nextTheme);
+    localStorage.setItem(THEME_KEY, nextTheme);
+});
+
+initTheme();
+loadWishlist();

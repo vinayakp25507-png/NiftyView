@@ -35,6 +35,7 @@
                     <option value="change-high">Change High–Low</option>
                     <option value="change-low">Change Low–High</option>
                 </select>
+                <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">Dark Mode</button>
                 <span class="stock-count" id="stock-count">MARKET STOCKS</span>
             </div>
 
@@ -45,6 +46,7 @@
                         <th>Stock</th>
                         <th>Price (USD)</th>
                         <th>Change</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="stock-table-body"></tbody>
@@ -98,6 +100,13 @@
                 <p class="api-key-hint">Check your Twelve Data plan limits for API credits.</p>
                 <p class="api-key-status" id="api-key-status" aria-live="polite"></p>
                 </div>
+            </div>
+
+            <div class="sidebar-card wishlist-card">
+                <h2 class="sidebar-title">Wishlist</h2>
+                <p class="sidebar-desc">Stocks you want to watch later.</p>
+                <p class="wishlist-empty" id="wishlist-empty">No stocks in wishlist yet.</p>
+                <ul class="wishlist-list" id="wishlist-list" aria-live="polite"></ul>
             </div>
         </aside>
     </div>
